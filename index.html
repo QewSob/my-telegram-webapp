@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мини-приложение Telegram</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1>Добро пожаловать в мини-приложение!</h1>
+    </div>
+
+    <div class="content">
+        <!-- Главное меню -->
+        <div class="menu">
+            <button class="menu-item" onclick="openSubMenu('option1')">Опция 1</button>
+            <button class="menu-item" onclick="openSubMenu('option2')">Опция 2</button>
+            <button class="menu-item" onclick="openSubMenu('option3')">Опция 3</button>
+        </div>
+
+        <!-- Подменю для опций -->
+        <div class="sub-menu" id="option1">
+            <h2>Подменю 1</h2>
+            <p>Здесь вы можете выбрать дополнительные действия.</p>
+            <button onclick="goBack()">Назад</button>
+        </div>
+        <div class="sub-menu" id="option2">
+            <h2>Подменю 2</h2>
+            <p>Дополнительные действия для Опции 2.</p>
+            <button onclick="goBack()">Назад</button>
+        </div>
+        <div class="sub-menu" id="option3">
+            <h2>Подменю 3</h2>
+            <p>Дополнительные действия для Опции 3.</p>
+            <button onclick="goBack()">Назад</button>
+        </div>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+
+        // Расширение Web App на весь экран
+        tg.expand();
+
+        // Функция для открытия подменю
+        function openSubMenu(option) {
+            document.querySelectorAll('.sub-menu').forEach(menu => menu.style.display = 'none');
+            document.getElementById(option).style.display = 'block';
+            document.querySelector('.menu').style.display = 'none';
+        }
+
+        // Функция для возврата назад
+        function goBack() {
+            document.querySelectorAll('.sub-menu').forEach(menu => menu.style.display = 'none');
+            document.querySelector('.menu').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
