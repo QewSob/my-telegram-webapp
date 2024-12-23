@@ -1,0 +1,203 @@
+/* Основные стили в черно-белой палитре */
+body {
+  margin: 0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background-color: #000; /* Черный фон */
+  color: #fff; /* Белый текст */
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #000; /* Черный фон */
+  color: #fff; /* Белый текст */
+  padding: 10px 20px;
+  border-bottom: 2px solid #fff; /* Белая граница */
+}
+
+.app-title {
+  font-size: 1.8em;
+  display: flex;
+  align-items: center;
+}
+
+.badge {
+  background-color: transparent; /* Прозрачный фон */
+  color: #fff; /* Белый текст */
+  border: 2px solid #fff; /* Белая граница */
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin-left: 10px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wallet {
+  text-align: center;
+  margin: 20px 0;
+  border: 2px solid #fff; /* Белая рамка */
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.spiders-count {
+  font-size: 1.5em;
+  color: #fff; /* Белый текст */
+}
+
+.rank {
+  font-size: 1em;
+  color: #fff; /* Белый текст */
+}
+
+.menu-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-link {
+  padding: 10px 20px;
+  background-color: transparent; /* Прозрачный фон */
+  color: #fff; /* Белый текст */
+  border: 2px solid #fff; /* Белая граница */
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.3s, background-color 0.3s, color 0.3s;
+}
+
+.menu-link:hover {
+  background-color: #fff; /* Белая заливка при наведении */
+  color: #000; /* Черный текст при наведении */
+  transform: scale(1.1);
+}
+
+.nav-footer {
+  display: flex;
+  justify-content: space-around;
+  background-color: #000; /* Черный фон */
+  color: #fff; /* Белый текст */
+  padding: 10px 0;
+  border-top: 2px solid #fff; /* Белая граница */
+}
+
+.nav-btn {
+  flex: 1;
+  text-align: center;
+  color: #fff; /* Белый текст */
+  background: none; /* Прозрачный фон */
+  border: 2px solid #fff; /* Белая граница */
+  padding: 10px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s, color 0.3s;
+}
+
+.nav-btn.active {
+  background-color: #fff; /* Белая заливка */
+  color: #000; /* Черный текст */
+}
+
+.nav-btn:hover {
+  background-color: #fff; /* Белая заливка при наведении */
+  color: #000; /* Черный текст при наведении */
+  transform: scale(1.1);
+}
+
+.action-btn {
+  padding: 15px 30px;
+  font-size: 1em;
+  background-color: transparent; /* Прозрачный фон */
+  border: 2px solid #fff; /* Белая рамка */
+  color: #fff; /* Белый текст */
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: transform 0.3s, background-color 0.3s, color 0.3s;
+}
+
+.action-btn:hover {
+  background-color: #fff; /* Белая заливка при наведении */
+  color: #000; /* Черный текст при наведении */
+  transform: scale(1.1);
+}
+
+.wallet-btn {
+  background: none; /* Прозрачный фон */
+  border: none;
+  font-size: 1em;
+  color: #fff; /* Белый текст */
+  cursor: pointer;
+}
+
+.close-btn, .menu-btn {
+  background: none; /* Прозрачный фон */
+  border: none;
+  color: white; /* Белый текст */
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.modal {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+  background-color: #000; /* Черный фон */
+  margin: 15% auto;
+  padding: 20px;
+  border: 2px solid #fff; /* Белая рамка */
+  width: 80%;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.modal-content h2 {
+  color: #fff; /* Белый текст */
+}
+
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #fff; /* Белая при наведении */
+}
+
+button {
+  transition: background-color 0.3s, transform 0.2s, color 0.3s;
+}
+
+button:active {
+  transform: scale(0.95);
+}
