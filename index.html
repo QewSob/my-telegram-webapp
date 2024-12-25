@@ -226,11 +226,11 @@
   <div class="task-list" id="taskList">
     <div class="task">
       <span>Subscribe to Telegram Channel</span>
-      <button onclick="startTask(this)">Start</button>
+      <button onclick="redirectToTask('https://t.me/spidersbott')">Start</button>
     </div>
     <div class="task">
       <span>Follow us on Instagram</span>
-      <button onclick="startTask(this)">Start</button>
+      <button onclick="redirectToTask('https://www.instagram.com/your_profile')">Start</button>
     </div>
     <button onclick="closeTaskList()" style="margin-top: 15px; padding: 10px; background-color: #4caf50; color: white; border: none; border-radius: 5px;">Close</button>
   </div>
@@ -245,18 +245,8 @@
       document.getElementById('taskList').style.display = 'none';
     }
 
-    function startTask(button) {
-      button.textContent = 'Claim';
-      button.style.backgroundColor = '#ffc107';
-      button.onclick = function() {
-        claimTask(button);
-      };
-    }
-
-    function claimTask(button) {
-      const task = button.parentElement;
-      task.style.textDecoration = 'line-through';
-      button.remove();
+    function redirectToTask(url) {
+      window.open(url, '_blank'); // Открыть ссылку в новой вкладке
     }
   </script>
 </body>
