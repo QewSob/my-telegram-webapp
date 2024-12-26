@@ -33,21 +33,7 @@
       color: #fff;
       padding: 10px 20px;
       border-bottom: 2px solid #fff;
-    }
-
-    .app-title {
-      font-size: 1.8em;
-      display: flex;
-      align-items: center;
-    }
-
-    .badge {
-      background-color: transparent;
-      color: #fff;
-      border: 2px solid #fff;
-      border-radius: 5px;
-      padding: 2px 5px;
-      margin-left: 10px;
+      display: none; /* Убираем заголовок */
     }
 
     .main-content {
@@ -61,25 +47,22 @@
     .wallet {
       text-align: center;
       margin: 20px 0;
-      border: 2px solid #fff;
-      border-radius: 10px;
       padding: 15px;
+      margin-bottom: 40px; /* Отступ снизу для очков */
     }
 
     .spiders-count {
-      font-size: 1.5em;
+      font-size: 4em; /* Увеличиваем размер очков */
       color: #fff;
-    }
-
-    .rank {
-      font-size: 1em;
-      color: #fff;
+      margin-bottom: 10px;
+      text-align: center;
     }
 
     .menu-actions {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      margin-top: 20px;
     }
 
     .menu-link {
@@ -129,22 +112,6 @@
       background-color: #fff;
       color: #000;
       transform: scale(1.1);
-    }
-
-    .wallet-btn {
-      background: none;
-      border: none;
-      font-size: 1em;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    .close-btn, .menu-btn {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5em;
-      cursor: pointer;
     }
 
     .task-list {
@@ -204,13 +171,12 @@
     <div class="main-content">
       <div class="wallet">
         <button class="wallet-btn"><i class="fas fa-wallet"></i> Your wallet ▼</button>
-        <div class="spiders-count"><i class="fas fa-spider"></i> 0 <span>SPIDERS</span></div>
-        <p class="rank">PIONEER ⚡ RANK</p>
-      </div>
-      <div class="menu-actions">
-        <button class="menu-link" onclick="openModal('communityModal')">
-          <i class="fas fa-users"></i> Join our community
-        </button>
+        <div class="spiders-count" id="spiderCount">0</div> <!-- Увеличенные очки -->
+        <div class="menu-actions">
+          <button class="menu-link" onclick="openModal('communityModal')">
+            <i class="fas fa-users"></i> Join our community
+          </button>
+        </div>
       </div>
     </div>
 
@@ -226,16 +192,18 @@
   <div class="task-list" id="taskList">
     <div class="task">
       <span>Subscribe to Telegram Channel</span>
-      <button onclick="redirectToTask('https://t.me/spidersbott')">Start</button>
+      <button onclick="startTask(this, 10, 'https://t.me/spidersbott')">Start</button>
     </div>
     <div class="task">
       <span>Follow us on Instagram</span>
-      <button onclick="redirectToTask('https://www.instagram.com/your_profile')">Start</button>
+      <button onclick="startTask(this, 15, 'https://instagram.com/example_profile')">Start</button>
     </div>
     <button onclick="closeTaskList()" style="margin-top: 15px; padding: 10px; background-color: #4caf50; color: white; border: none; border-radius: 5px;">Close</button>
   </div>
 
   <script>
+    let spiderCount = 0; // Переменная для хранения очков
+
     function toggleTaskList() {
       const taskList = document.getElementById('taskList');
       taskList.style.display = taskList.style.display === 'block' ? 'none' : 'block';
@@ -245,8 +213,27 @@
       document.getElementById('taskList').style.display = 'none';
     }
 
-    function redirectToTask(url) {
-      window.open(url, '_blank'); // Открыть ссылку в новой вкладке
+    function startTask(button, points, url) {
+      // Перенаправляем пользователя по ссылке
+      window.open(url, '_blank');
+      // Меняем кнопку на "Claim" после возвращения
+      button.textContent = 'Claim';
+      button.style.backgroundColor = '#ffc107';
+      button.onclick = function() {
+        claimTask(button, points);
+      };
+    }
+
+    function claimTask(button, points) {
+      const task = button.parentElement;
+      task.style.textDecoration = 'line-through'; // Помечаем задание как выполненное
+      button.remove(); // Убираем кнопку после нажатия
+      addPoints(points); // Начисляем очки
+    }
+
+    function addPoints(points) {
+      spiderCount += points; // Увеличиваем общий счет
+      document.getElementById('spiderCount').textContent = spiderCount; // Обновляем счет на экране
     }
   </script>
 </body>
