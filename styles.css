@@ -1,233 +1,274 @@
-/* Основные стили в черно-белой палитре */
-body {
-  margin: 0;
-  font-family: sans-serif; /* Обычный системный шрифт */
-  font-weight: bold; /* Полужирный шрифт */
-  background-color: #000; /* Черный фон */
-  color: #fff; /* Белый текст */
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini App</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      font-weight: bold;
+      background-color: #000;
+      color: #fff;
+      overflow: hidden;
+    }
 
-.app-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-}
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+    }
 
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #000; /* Черный фон */
-  color: #fff; /* Белый текст */
-  padding: 10px 20px;
-  border-bottom: 2px solid #fff; /* Белая граница */
-}
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-.app-title {
-  font-size: 1.8em;
-  display: flex;
-  align-items: center;
-}
+    .wallet {
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      margin-bottom: 40px;
+    }
 
-.badge {
-  background-color: transparent; /* Прозрачный фон */
-  color: #fff; /* Белый текст */
-  border: 2px solid #fff; /* Белая граница */
-  border-radius: 5px;
-  padding: 2px 5px;
-  margin-left: 10px;
-}
+    .spiders-count {
+      font-size: 4em;
+      color: #fff;
+      margin-bottom: 10px;
+      text-align: center;
+    }
 
-.main-content {
-  flex: 1;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    .menu-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
 
-.wallet {
-  text-align: center;
-  margin: 20px 0;
-  border: 2px solid #fff; /* Белая рамка */
-  border-radius: 10px;
-  padding: 15px;
-}
+    .menu-link {
+      padding: 10px 20px;
+      background-color: transparent;
+      color: #fff;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.3s, background-color 0.3s, color 0.3s;
+    }
 
-.spiders-count {
-  font-size: 1.5em;
-  color: #fff; /* Белый текст */
-}
+    .menu-link:hover {
+      background-color: #fff;
+      color: #000;
+      transform: scale(1.1);
+    }
 
-.rank {
-  font-size: 1em;
-  color: #fff; /* Белый текст */
-}
+    .nav-footer {
+      display: flex;
+      justify-content: space-around;
+      background-color: #000;
+      color: #fff;
+      padding: 10px 0;
+      border-top: 2px solid #fff;
+    }
 
-.menu-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+    .nav-btn {
+      flex: 1;
+      text-align: center;
+      color: #fff;
+      background: none;
+      border: 2px solid #fff;
+      padding: 10px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: transform 0.3s, background-color 0.3s, color 0.3s;
+    }
 
-.menu-link {
-  padding: 10px 20px;
-  background-color: transparent; /* Прозрачный фон */
-  color: #fff; /* Белый текст */
-  border: 2px solid #fff; /* Белая граница */
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-  transition: transform 0.3s, background-color 0.3s, color 0.3s;
-}
+    .nav-btn.active {
+      background-color: #fff;
+      color: #000;
+    }
 
-.menu-link:hover {
-  background-color: #fff; /* Белая заливка при наведении */
-  color: #000; /* Черный текст при наведении */
-  transform: scale(1.1);
-}
+    .nav-btn:hover {
+      background-color: #fff;
+      color: #000;
+      transform: scale(1.1);
+    }
 
-.nav-footer {
-  display: flex;
-  justify-content: space-around;
-  background-color: #000; /* Черный фон */
-  color: #fff; /* Белый текст */
-  padding: 10px 0;
-  border-top: 2px solid #fff; /* Белая граница */
-}
+    .task-list {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #000;
+      z-index: 9999;
+      display: none;
+      padding: 20px;
+      overflow-y: auto;
+      color: #fff;
+    }
 
-.nav-btn {
-  flex: 1;
-  text-align: center;
-  color: #fff; /* Белый текст */
-  background: none; /* Прозрачный фон */
-  border: 2px solid #fff; /* Белая граница */
-  padding: 10px;
-  font-size: 1em;
-  cursor: pointer;
-  transition: transform 0.3s, background-color 0.3s, color 0.3s;
-}
+    .task {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      transition: transform 0.3s;
+    }
 
-.nav-btn.active {
-  background-color: #fff; /* Белая заливка */
-  color: #000; /* Черный текст */
-}
+    .task:hover {
+      transform: scale(1.05);
+    }
 
-.nav-btn:hover {
-  background-color: #fff; /* Белая заливка при наведении */
-  color: #000; /* Черный текст при наведении */
-  transform: scale(1.1);
-}
+    .task button {
+      padding: 5px 10px;
+      font-size: 14px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      background-color: #fff;
+      color: #000;
+      transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    }
 
-.wallet-btn {
-  background: none; /* Прозрачный фон */
-  border: none;
-  font-size: 1em;
-  color: #fff; /* Белый текст */
-  cursor: pointer;
-}
+    .task button:hover {
+      background-color: #00ff00;
+      color: #fff;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="main-content">
+      <div class="wallet">
+        <button class="wallet-btn"><i class="fas fa-wallet"></i> Your wallet ▼</button>
+        <div class="spiders-count" id="spiderCount">0</div>
+        <div class="menu-actions">
+          <button class="menu-link" onclick="openModal('communityModal')">
+            <i class="fas fa-users"></i> Join our community
+          </button>
+        </div>
+      </div>
+    </div>
 
-.close-btn, .menu-btn {
-  background: none; /* Прозрачный фон */
-  border: none;
-  color: white; /* Белый текст */
-  font-size: 1.5em;
-  cursor: pointer;
-}
+    <footer class="nav-footer">
+      <button class="nav-btn active"><i class="fas fa-home"></i> Home</button>
+      <button class="nav-btn"><i class="fas fa-crown"></i> Leaders</button>
+      <button class="nav-btn"><i class="fas fa-user-friends"></i> Friends</button>
+      <button class="nav-btn" onclick="toggleTaskList()"><i class="fas fa-dollar-sign"></i> Earn</button>
+    </footer>
+  </div>
 
-.modal {
-  display: none;
-  position: absolute;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.8);
-}
+  <div class="task-list" id="taskList">
+    <div class="task">
+      <div class="task-text">
+        <span>Subscribe to Telegram Channel</span>
+        <span class="task-reward">+100 SPIDERS</span>
+      </div>
+      <button data-points="100" data-url="https://t.me/example_channel">Start</button>
+    </div>
 
-.modal-content {
-  background-color: #000; /* Черный фон */
-  margin: 15% auto;
-  padding: 20px;
-  border: 2px solid #fff; /* Белая рамка */
-  width: 80%;
-  color: white;
-  text-align: center;
-  border-radius: 10px;
-}
+    <div class="task">
+      <div class="task-text">
+        <span>Follow us on Instagram</span>
+        <span class="task-reward">+150 SPIDERS</span>
+      </div>
+      <button data-points="150" data-url="https://instagram.com/example_profile">Start</button>
+    </div>
+    <button onclick="closeTaskList()" style="margin-top: 15px; padding: 10px; background-color: #4caf50; color: white; border: none; border-radius: 5px;">Close</button>
+  </div>
 
-.modal-content h2 {
-  color: #fff; /* Белый текст */
-}
+  <script>
+    let spiderCount = 0;
 
-.close {
-  color: white;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    // Загружаем очки и выполненные задания из localStorage
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedCount = localStorage.getItem('spiderCount');
+      spiderCount = savedCount ? parseInt(savedCount) : 0;
+      updateSpiderCount();
 
-.close:hover {
-  color: #fff; /* Белая при наведении */
-}
+      // Загружаем выполненные задания
+      const completedTasks = JSON.parse(localStorage.getItem('completedTasks')) || [];
+      document.querySelectorAll('.task').forEach((task, index) => {
+        const button = task.querySelector('button');
+        if (completedTasks.includes(index)) {
+          markTaskCompleted(task);
+        } else {
+          button.onclick = function () {
+            startTask(button, parseInt(button.getAttribute('data-points')), button.getAttribute('data-url'), index);
+          };
+        }
+      });
+    });
 
-button {
-  transition: background-color 0.3s, transform 0.2s, color 0.3s;
-}
+    // Функция для отображения или скрытия списка заданий
+    function toggleTaskList() {
+      const taskList = document.getElementById('taskList');
+      taskList.style.display = taskList.style.display === 'block' ? 'none' : 'block';
+    }
 
-button:active {
-  transform: scale(0.95);
-}
+    function closeTaskList() {
+      document.getElementById('taskList').style.display = 'none';
+    }
 
-.tasks-container {
-  padding: 20px;
-  background-color: #000; /* Черный фон */
-  color: #fff; /* Белый текст */
-}
+    // Начать выполнение задания
+    function startTask(button, points, url, taskIndex) {
+      window.open(url, '_blank');
+      button.textContent = 'Claim';
+      button.style.backgroundColor = '#ffc107';
+      button.onclick = function () {
+        claimTask(button, points, taskIndex);
+      };
+    }
 
-.task-category h3 {
-  border-bottom: 2px solid #fff;
-  padding-bottom: 5px;
-  margin-bottom: 10px;
-  font-size: 1.2em;
-  text-transform: uppercase;
-}
+    // Завершить выполнение задания
+    function claimTask(button, points, taskIndex) {
+      const task = button.parentElement;
+      task.style.textDecoration = 'line-through';
+      button.remove();
+      addPoints(points);
+      saveCompletedTask(taskIndex);
+    }
 
-.task-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #fff;
-}
+    // Добавление очков
+    function addPoints(points) {
+      spiderCount += points;
+      updateSpiderCount();
+      // Сохранение очков в localStorage
+      localStorage.setItem('spiderCount', spiderCount);
+    }
 
-.task-item:last-child {
-  border-bottom: none;
-}
+    // Обновление отображения очков
+    function updateSpiderCount() {
+      document.getElementById('spiderCount').textContent = spiderCount;
+    }
 
-.reward {
-  color: #00ff00; /* Зеленый цвет для награды */
-  font-weight: bold;
-}
+    // Сохранить выполненные задания
+    function saveCompletedTask(taskIndex) {
+      let completedTasks = JSON.parse(localStorage.getItem('completedTasks')) || [];
+      completedTasks.push(taskIndex);
+      localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+    }
 
-.start-btn {
-  padding: 5px 10px;
-  background-color: #fff; /* Белый фон */
-  color: #000; /* Черный текст */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
-}
-
-.start-btn:hover {
-  background-color: #00ff00; /* Зеленый при наведении */
-  color: #fff;
-  transform: scale(1.1);
-}
+    // Отметить задание как выполненное
+    function markTaskCompleted(task) {
+      task.style.textDecoration = 'line-through';
+      const button = task.querySelector('button');
+      if (button) button.remove();
+    }
+  </script>
+</body>
+</html>
