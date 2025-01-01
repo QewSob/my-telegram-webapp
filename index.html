@@ -148,6 +148,40 @@
       color: #fff;
       transform: scale(1.1);
     }
+
+    /* Стили для таблицы лидеров */
+    .leaders {
+      padding: 20px;
+      color: #fff;
+      display: none; /* Скрываем по умолчанию */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #fff;
+    }
+
+    th {
+      background-color: #333;
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: #444;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #555;
+    }
+
+    tbody tr:hover {
+      background-color: #777;
+    }
   </style>
 </head>
 <body>
@@ -157,7 +191,7 @@
         <button class="wallet-btn"><i class="fas fa-wallet"></i> Your wallet ▼</button>
         <div class="spiders-count" id="spiderCount">0</div>
         <div class="menu-actions">
-            <i class="fas fa-users"></i> Join our community
+          <i class="fas fa-users"></i> Join our community
           <button onclick="window.location.href='https://t.me/spidersbott'">Join our community</button>
         </div>
       </div>
@@ -165,7 +199,7 @@
 
     <footer class="nav-footer">
       <button class="nav-btn active"><i class="fas fa-home"></i> Home</button>
-      <button class="nav-btn"><i class="fas fa-crown"></i> Leaders</button>
+      <button class="nav-btn" id="leadersBtn"><i class="fas fa-crown"></i> Leaders</button>
       <button class="nav-btn"><i class="fas fa-user-friends"></i> Friends</button>
       <button class="nav-btn" onclick="toggleTaskList()"><i class="fas fa-dollar-sign"></i> Earn</button>
     </footer>
@@ -190,8 +224,89 @@
     <button onclick="closeTaskList()" style="margin-top: 15px; padding: 10px; background-color: #4caf50; color: white; border: none; border-radius: 5px;">Close</button>
   </div>
 
+  <!-- Секция таблицы лидеров -->
+  <div class="leaders" id="leaders">
+    <div class="trophy">🏆</div>
+    <h2>Leaderboard</h2>
+    <p>Total: <span id="totalUsers">0</span> users</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Avatar</th>
+          <th>Name</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody id="leadersList">
+        <!-- Лидеры будут добавлены динамически -->
+      </tbody>
+    </table>
+    <button class="nav-btn" onclick="addToLeaderboard()">Add Yourself</button>
+  </div>
+
   <script>
+    // Основной функционал
     let spiderCount = 0;
+
+    const defaultLeaders = [
+      { name: "elkanadi", points: 1102913005, avatar: "https://via.placeholder.com/40?text=E" },
+      { name: "flasher888", points: 301307463, avatar: "https://via.placeholder.com/40?text=F" },
+      { name: "qewsob", points: 286753, avatar: "https://via.placeholder.com/40?text=Q" },
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const leaders = JSON.parse(localStorage.getItem("leaders")) || defaultLeaders;
+      localStorage.setItem("leaders", JSON.stringify(leaders));
+      updateLeaders();
+    });
+
+    document.getElementById("leadersBtn").addEventListener("click", () => {
+      document.getElementById("leaders").style.display = "block";
+      document.querySelector(".main-content").style.display = "none";
+    });
+
+    function updateLeaders() {
+      const leaders = JSON.parse(localStorage.getItem("leaders")) || [];
+      const leadersList = document.getElementById("leadersList");
+      const totalUsers = document.getElementById("totalUsers");
+
+      leadersList.innerHTML = "";
+      totalUsers.textContent = leaders.length;
+
+      leaders.forEach((leader, index) => {
+        const row = document.createElement("tr");
+        let rankIcon = "";
+
+        if (index === 0) rankIcon = '<span class="rank-icon rank-1">🥇</span>';
+        else if (index === 1) rankIcon = '<span class="rank-icon rank-2">🥈</span>';
+        else if (index === 2) rankIcon = '<span class="rank-icon rank-3">🥉</span>';
+
+        row.innerHTML = `
+          <td>${rankIcon || index + 1}</td>
+          <td class="avatar-wrapper"><img src="${leader.avatar}" alt="Avatar" class="avatar"></td>
+          <td>${leader.name}</td>
+          <td>${leader.points}</td>
+        `;
+        leadersList.appendChild(row);
+      });
+    }
+
+    function addToLeaderboard() {
+      const name = prompt("Enter your name:");
+      const avatar = prompt("Enter your avatar URL (or leave blank for default):") || "https://via.placeholder.com/40";
+      if (name) {
+        saveLeader(name, spiderCount, avatar);
+        updateLeaders();
+      }
+    }
+
+    function saveLeader(name, points, avatar) {
+      const leaders = JSON.parse(localStorage.getItem("leaders")) || [];
+      leaders.push({ name, points, avatar });
+      leaders.sort((a, b) => b.points - a.points);
+      localStorage.setItem("leaders", JSON.stringify(leaders));
+    }
 
     // Загружаем очки и выполненные задания из localStorage
     document.addEventListener('DOMContentLoaded', () => {
@@ -211,6 +326,8 @@
           };
         }
       });
+
+      updateLeaders();
     });
 
     // Функция для отображения или скрытия списка заданий
@@ -250,7 +367,6 @@
       localStorage.setItem('spiderCount', spiderCount);
     }
 
-    // Обновление отображения очков
     function updateSpiderCount() {
       document.getElementById('spiderCount').textContent = spiderCount;
     }
