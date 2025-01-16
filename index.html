@@ -1,0 +1,233 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="main-content">
+        <div class="wallet">
+          <button class="wallet-btn"><i class="fas fa-wallet"></i> Your wallet ▼</button>
+          <div class="spiders-count" id="spiderCount">0</div>
+          <div class="menu-actions">
+            <i class="fas fa-users"></i> Join our community
+            <button onclick="window.location.href='https://t.me/spidersbott'">Join our community</button>
+          </div>
+        </div>
+
+        <!-- Секция таблицы лидеров -->
+        <div class="leaders" id="leaders">
+          <h2>Leaderboard</h2>
+          <p>Total: <span id="totalUsers">0</span> users</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Avatar</th>
+                <th>Name</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+            <tbody id="leadersList">
+              <!-- Лидеры будут добавлены динамически -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <footer class="nav-footer">
+        <button class="nav-btn active"><i class="fas fa-home"></i> Home</button>
+        <button class="nav-btn" id="leadersBtn"><i class="fas fa-crown"></i> Leaders</button>
+        <button class="nav-btn"><i class="fas fa-user-friends"></i> Friends</button>
+        <button class="nav-btn" onclick="toggleTaskList()"><i class="fas fa-dollar-sign"></i> Earn</button>
+      </footer>
+    </div>
+
+    <div class="task-list" id="taskList">
+      <div class="task">
+        <div class="task-text">
+          <span>Subscribe to Telegram Channel</span>
+          <span class="task-reward">+100 SPIDERS</span>
+        </div>
+        <button data-points="100" data-url="https://t.me/spidersbott">Start</button>
+      </div>
+
+      <div class="task">
+        <div class="task-text">
+          <span>Follow us on Instagram</span>
+          <span class="task-reward">+150 SPIDERS</span>
+        </div>
+        <button data-points="150" data-url="https://instagram.com/qewsob">Start</button>
+      </div>
+      <button onclick="closeTaskList()" style="margin-top: 15px; padding: 10px; background-color: #4caf50; color: white; border: none; border-radius: 5px;">Close</button>
+    </div>
+
+
+
+    <script>
+      // Основной функционал
+      let spiderCount = 0;
+
+      // Загружаем очки и выполненные задания из localStorage
+document.addEventListener('DOMContentLoaded', () => {
+  // Загружаем очки и имя текущего пользователя из localStorage
+  const savedCount = localStorage.getItem('spiderCount');
+  spiderCount = savedCount ? parseInt(savedCount) : 0;
+  updateSpiderCount();
+
+  // Загружаем выполненные задания
+  const completedTasks = JSON.parse(localStorage.getItem('completedTasks')) || [];
+  document.querySelectorAll('.task').forEach((task, index) => {
+    const button = task.querySelector('button');
+    if (completedTasks.includes(index)) {
+      markTaskCompleted(task);
+    } else {
+      button.onclick = function () {
+        startTask(button, parseInt(button.getAttribute('data-points')), button.getAttribute('data-url'), index);
+      };
+    }
+  });
+
+  // Получаем и сохраняем ник Telegram
+  let userName = localStorage.getItem('telegramUsername');
+  if (!userName) {
+    // Запрашиваем у пользователя его Telegram ник
+    userName = prompt('Please enter your Telegram username (without @):');
+    if (userName) {
+      localStorage.setItem('telegramUsername', userName);
+    }
+  }
+
+  // Ищем текущего пользователя в списке лидеров
+  const currentPlayerIndex = leaders.findIndex(player => player.name === userName);
+
+  if (currentPlayerIndex === -1) {
+    // Если текущий пользователь не найден, добавляем его в список
+    const currentPlayer = { name: userName || "Unknown", points: spiderCount, avatar: "https://via.placeholder.com/40?text=Y" };
+    leaders.unshift(currentPlayer);  // Добавляем текущего игрока в начало списка
+  } else {
+    // Если текущий пользователь уже есть, обновляем его очки
+    leaders[currentPlayerIndex].points = spiderCount;
+  }
+
+  // Сортируем лидеров по очкам (по убыванию)
+  leaders.sort((a, b) => b.points - a.points);
+
+  // Сохраняем обновленный список лидеров
+  localStorage.setItem("leaders", JSON.stringify(leaders));
+
+  // Обновляем таблицу лидеров
+  updateLeaders(leaders, currentPlayerIndex);
+});
+
+// Функция для обновления таблицы лидеров
+function updateLeaders(leaders, currentPlayerIndex) {
+  const leadersList = document.getElementById("leadersList");
+  const totalUsers = document.getElementById("totalUsers");
+
+  leadersList.innerHTML = "";
+  totalUsers.textContent = leaders.length;
+
+  leaders.forEach((leader, index) => {
+    const row = document.createElement("tr");
+    let rankIcon = "";
+
+    if (index === 0) rankIcon = '🥇';
+    else if (index === 1) rankIcon = '🥈';
+    else if (index === 2) rankIcon = '🥉';
+
+    row.innerHTML = `
+      <td>${rankIcon || index + 1}</td>
+      <td><img src="${leader.avatar}" alt="Avatar" class="avatar"></td>
+      <td>${leader.name}</td>
+      <td>${leader.points}</td>
+    `;
+
+    // Выделяем текущего игрока
+    if (index === currentPlayerIndex) {
+      row.style.backgroundColor = "#f0f0f0";  // Выделяем строку текущего игрока
+    }
+
+    leadersList.appendChild(row);
+  });
+
+  // Позиция текущего игрока
+  const currentPlayerPosition = currentPlayerIndex + 1;
+  alert(`Ваше место в таблице: ${currentPlayerPosition}`);
+}
+
+
+
+
+      // Функция для отображения или скрытия списка заданий
+      function toggleTaskList() {
+        const taskList = document.getElementById('taskList');
+        taskList.style.display = taskList.style.display === 'block' ? 'none' : 'block';
+      }
+
+      function closeTaskList() {
+        document.getElementById('taskList').style.display = 'none';
+      }
+
+      // Показать или скрыть таблицу лидеров
+      document.getElementById("leadersBtn").addEventListener("click", () => {
+        const leadersDiv = document.getElementById("leaders");
+        leadersDiv.style.display = leadersDiv.style.display === "none" || leadersDiv.style.display === "" ? "block" : "none";
+      });
+
+      // Начать выполнение задания
+      function startTask(button, points, url, taskIndex) {
+        window.open(url, '_blank');
+        button.textContent = 'Claim';
+        button.style.backgroundColor = '#ffc107';
+        button.onclick = function () {
+          claimTask(button, points, taskIndex);
+        };
+      }
+
+      // Завершить выполнение задания
+      function claimTask(button, points, taskIndex) {
+        const task = button.parentElement;
+        task.style.textDecoration = 'line-through';
+        button.remove();
+        addPoints(points);
+        saveCompletedTask(taskIndex);
+      }
+
+      // Добавление очков
+      function addPoints(points) {
+        spiderCount += points;
+        updateSpiderCount();
+        // Сохранение очков в localStorage
+        localStorage.setItem('spiderCount', spiderCount);
+      }
+
+      function updateSpiderCount() {
+        document.getElementById('spiderCount').textContent = spiderCount;
+      }
+
+      // Сохранить выполненные задания
+      function saveCompletedTask(taskIndex) {
+        let completedTasks = JSON.parse(localStorage.getItem('completedTasks')) || [];
+        completedTasks.push(taskIndex);
+        localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+      }
+
+      // Отметить задание как выполненное
+      function markTaskCompleted(task) {
+        task.style.textDecoration = 'line-through';
+        const button = task.querySelector('button');
+        if (button) button.remove();
+      }
+    </script>
+  <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js"></script>
+
+    <script src="leaderboard.js"></script>
+
+  </body>
+  </html>
